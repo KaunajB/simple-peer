@@ -13,10 +13,10 @@
   <button id="stop-video">Stop</button>
   <script src="./simplepeer.min.js"></script>
   <script>
-    navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true
-    }).then(gotMedia).catch(() => { })
+    // navigator.mediaDevices.getUserMedia({
+    //   video: true,
+    //   audio: true
+    // }).then(gotMedia).catch(() => { })
 
     function gotMedia(stream) {
       var peer1 = new SimplePeer({ initiator: true, stream: stream })
@@ -39,29 +39,23 @@
         } else {
           video.src = window.URL.createObjectURL(stream) // for older browsers
         }
-
         video.play()
       })
-
-      document.getElementById('stop-video').addEventListener('click', ev => {
-        ev.preventDefault()
-        stopVideoOnly(stream)
-      })
-
-      document.getElementById('start-video').addEventListener('click', ev => {
-        ev.preventDefault()
-        if (navigator.getUserMedia) {
-          var video = document.querySelector('video')
-          if ('srcObject' in video) {
-            video.srcObject = stream
-          } else {
-            video.src = window.URL.createObjectURL(stream) // for older browsers
-          }
-        } else {
-          console.log('navigator.getUserMedia not found')
-        }
-      })
     }
+
+    document.getElementById('stop-video').addEventListener('click', ev => {
+      console.log('stopping video')
+      ev.preventDefault()
+      stopVideoOnly(stream)
+    })
+
+    document.getElementById('start-video').addEventListener('click', ev => {
+      ev.preventDefault()
+      navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      }).then(gotMedia).catch(() => { })
+    })
 
     // stop only camera
     function stopVideoOnly(stream) {
@@ -70,6 +64,7 @@
           track.stop();
         }
       });
+      video.src = ''
     }
 
     // stop only mic
