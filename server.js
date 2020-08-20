@@ -40,7 +40,7 @@ const io = require("socket.io")(http, {
   app.get("/", (req, res) => {
     res.sendFile(__dirname + '/src/index.html');
   });
-  app.use('/public', express.static(path.join(__dirname, 'src')));
+  app.use(express.static(path.join(__dirname, 'src')));
 })();
 
 
