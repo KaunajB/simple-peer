@@ -11,12 +11,16 @@
     "url": "https://github.com/feross/simple-peer/issues"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "debug": "^4.0.1",
     "err-code": "^2.0.3",
+    "express": "^4.17.1",
     "get-browser-rtc": "^1.0.0",
+    "path": "^0.12.7",
     "queue-microtask": "^1.1.0",
     "randombytes": "^2.0.3",
-    "readable-stream": "^3.4.0"
+    "readable-stream": "^3.4.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "airtap": "^3.0.0",
