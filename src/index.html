@@ -10,7 +10,7 @@
 <body>
   <video width="320" height="240"></video>
   <button id="start-call">Call</button>
-  <button id="accept-call">Call</button>
+  <button id="accept-call">Accept</button>
   <button id="start-video">Start</button>
   <button id="stop-video">Stop</button>
   <script src="./simplepeer.min.js"></script>
@@ -22,6 +22,7 @@
     //   audio: true
     // }).then(gotMedia).catch(() => { })
 
+    import io from "socket.io-client";
     const socketURL = 'https://data-analytics.jubi.ai/call';
     const socketPath = '/socket';
     const uid = uuidv4();
