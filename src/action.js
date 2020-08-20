@@ -1,4 +1,4 @@
-import io from '/socket.io-client';
+import io from 'https://data-analytics.jubi.ai/call/socket.io-client';
 
 const socketURL = 'https://data-analytics.jubi.ai/call';
 const socketPath = '/socket';
