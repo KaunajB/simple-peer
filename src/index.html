@@ -41,13 +41,13 @@
         }
         video.play()
       })
-    }
 
-    document.getElementById('stop-video').addEventListener('click', ev => {
-      console.log('stopping video')
-      ev.preventDefault()
-      stopVideoOnly(stream)
-    })
+      document.getElementById('stop-video').addEventListener('click', ev => {
+        console.log('stopping video')
+        ev.preventDefault()
+        stopVideoOnly(stream)
+      })
+    }
 
     document.getElementById('start-video').addEventListener('click', ev => {
       ev.preventDefault()
