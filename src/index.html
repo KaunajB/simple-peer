@@ -10,31 +10,64 @@
 <body>
   <video width="320" height="240"></video>
   <button id="start-call">Call</button>
+  <button id="accept-call">Call</button>
   <button id="start-video">Start</button>
   <button id="stop-video">Stop</button>
   <script src="./simplepeer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script>
     // navigator.mediaDevices.getUserMedia({
     //   video: true,
     //   audio: true
     // }).then(gotMedia).catch(() => { })
 
-    console.log(uuidv4());
+    const uid = uuidv4();
+    console.log(uid);
+
+    (() => {
+      socket = io(socketURL, {
+        // WARNING: in that case, there is no fallback to long-polling
+        path: socketPath,
+        transports: ["websocket"], // or [ 'websocket', 'polling' ], which is the same thing
+      })
+      socket.emit('init', { uid: uid })
+      onCall()
+    })();
+
+    document.getElementById('start-call').addEventListener('click', ev => {
+      ev.preventDefault()
+      var peer = new SimplePeer({ initiator: true, stream: stream })
+      socket.emit('call', { uid: uid })
+    })
+
+    document.getElementById('accept-call').addEventListener('click', ev => {
+      ev.preventDefault()
+      // socket.emit('accept', { uid: uid })
+      onAccept()
+    })
+
+    function onCall() {
+      socket.once('call' + uid, (data) => {
+        console.log('call incoming', data)
+      })
+    }
+
+    function onAccept() {
+      navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      }).then(gotMedia).catch(() => { })
+    }
 
     function gotMedia(stream) {
-      var peer1 = new SimplePeer({ initiator: true, stream: stream })
-      var peer2 = new SimplePeer()
+      var peer = new SimplePeer()
 
-      peer1.on('signal', data => {
-        peer2.signal(data)
+      peer.on('signal', data => {
+        peer.signal(data)
       })
 
-      peer2.on('signal', data => {
-        peer1.signal(data)
-      })
-
-      peer2.on('stream', stream => {
+      peer.on('stream', stream => {
         // got remote video stream, now let's show it in a video tag
         var video = document.querySelector('video')
 

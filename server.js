@@ -57,7 +57,7 @@ const io = require("socket.io")(http, {
 (async function () {
   try {
     console.log("Initializing all socket connections...");
-    // socket.init(io);
+    socket.init(io);
     console.log("All setup done successfully..");
   } catch (e) {
     console.error(e);
