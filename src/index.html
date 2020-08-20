@@ -9,6 +9,7 @@
 
 <body>
   <video width="320" height="240"></video>
+  <button>Stop</button>
   <script src="./simplepeer.min.js"></script>
   <script>
     navigator.mediaDevices.getUserMedia({
@@ -39,6 +40,12 @@
         }
 
         video.play()
+      })
+
+      document.querySelector('button').addEventListener('click', ev => {
+        ev.preventDefault()
+        var video = document.querySelector('video')
+        video.src = ''
       })
     }
   </script>
