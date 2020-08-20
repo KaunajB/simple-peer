@@ -9,7 +9,8 @@
 
 <body>
   <video width="320" height="240"></video>
-  <button>Stop</button>
+  <button id="start-video">Start</button>
+  <button id="stop-video">Stop</button>
   <script src="./simplepeer.min.js"></script>
   <script>
     navigator.mediaDevices.getUserMedia({
@@ -42,11 +43,42 @@
         video.play()
       })
 
-      document.querySelector('button').addEventListener('click', ev => {
+      document.getElementById('stop-video').addEventListener('click', ev => {
         ev.preventDefault()
-        var video = document.querySelector('video')
-        video.src = ''
+        stopVideoOnly(stream)
       })
+
+      document.getElementById('start-video').addEventListener('click', ev => {
+        ev.preventDefault()
+        if (navigator.getUserMedia) {
+          var video = document.querySelector('video')
+          if ('srcObject' in video) {
+            video.srcObject = stream
+          } else {
+            video.src = window.URL.createObjectURL(stream) // for older browsers
+          }
+        } else {
+          console.log('navigator.getUserMedia not found')
+        }
+      })
+    }
+
+    // stop only camera
+    function stopVideoOnly(stream) {
+      stream.getTracks().forEach(function (track) {
+        if (track.readyState == 'live' && track.kind === 'video') {
+          track.stop();
+        }
+      });
+    }
+
+    // stop only mic
+    function stopAudioOnly(stream) {
+      stream.getTracks().forEach(function (track) {
+        if (track.readyState == 'live' && track.kind === 'audio') {
+          track.stop();
+        }
+      });
     }
   </script>
 </body>
