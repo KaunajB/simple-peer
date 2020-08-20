@@ -9,14 +9,18 @@
 
 <body>
   <video width="320" height="240"></video>
+  <button id="start-call">Call</button>
   <button id="start-video">Start</button>
   <button id="stop-video">Stop</button>
   <script src="./simplepeer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
   <script>
     // navigator.mediaDevices.getUserMedia({
     //   video: true,
     //   audio: true
     // }).then(gotMedia).catch(() => { })
+
+    console.log(uuidv4());
 
     function gotMedia(stream) {
       var peer1 = new SimplePeer({ initiator: true, stream: stream })
