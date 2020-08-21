@@ -7,50 +7,54 @@ console.log(uid);
 let socket;
 let peer;
 
-// CONNECTION
-socket = io(socketURL, {
-  path: socketPath,
-  transports: ["websocket", /*"polling"*/]
-})
-socket.emit('init', { uid: uid })
-// onCall(socket)
-console.log('waiting for call', uid);
-socket.on('call' + uid, (data) => {
-  console.log('call incoming', data)
-})
 
-socket.once('p2p', options => {
-  console.log('establishing p2p connection', options);
-  if (uid == options.initiator) {
-    peer = new SimplePeer({ initiator: true });
-    // peer.on('signal', data => {
-    //   console.log('signal data', data, uid);
-    //   peer.signal(data);
-    // });
-  } else {
-    peer = new SimplePeer();
-    // peer.on('signal', data => {
-    //   console.log('signal data', data, uid);
-    //   peer.signal(data);
-    // });
-  }
-  peer.on('signal', data => {
-    console.log('signal data init', data, uid);
-    peer.signal(data);
-    socket.emit('initiate', { data: data });
+$(document).ready(() => {
+  // CONNECTION
+  socket = io(socketURL, {
+    path: socketPath,
+    transports: ["websocket", /*"polling"*/]
+  })
+  socket.emit('init', { uid: uid })
+  // onCall(socket)
+  console.log('waiting for call', uid);
+  socket.on('call' + uid, (data) => {
+    console.log('call incoming', data)
+  })
+
+  socket.on('p2p', options => {
+    console.log('establishing p2p connection', options);
+    if (uid == options.initiator) {
+      peer = new SimplePeer({ initiator: true });
+      // peer.on('signal', data => {
+      //   console.log('signal data', data, uid);
+      //   peer.signal(data);
+      // });
+    } else {
+      peer = new SimplePeer();
+      // peer.on('signal', data => {
+      //   console.log('signal data', data, uid);
+      //   peer.signal(data);
+      // });
+    }
+    peer.on('signal', data => {
+      console.log('signal data init', data, uid);
+      peer.signal(data);
+      socket.emit('initiate', { data: data });
+    });
+    peer.on('error', err => console.log('peer error', err));
   });
-  peer.on('error', err => console.log('peer error', err));
+
+  socket.on('offer' + uid, options => {
+    console.log('got offer');
+    // peer.signal(options.data);
+    peer.on('signal', data => {
+      console.log('signal data offer', data, uid);
+      peer.signal(data);
+      // socket.emit('answer', { data: data });
+    });
+  });
 });
 
-socket.once('offer' + uid, options => {
-  console.log('got offer');
-  // peer.signal(options.data);
-  peer.on('signal', data => {
-    console.log('signal data offer', data, uid);
-    peer.signal(data);
-    // socket.emit('answer', { data: data });
-  });
-});
 
 // socket.on('success' + uid, options => {
 //   peer.signal(options.data);
