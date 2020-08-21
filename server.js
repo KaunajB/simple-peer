@@ -7,7 +7,7 @@ const path = require("path");
 
 
 // const cache = require("./operator/storage/cache")
-const socket = require("./socket.js");
+// const socket = require("./socket.js");
 // const broker = require("./operator/network/broker")
 // const api = require("./operator/network/api")
 // const aggData = require("./operator/core/aggData.js");
@@ -18,7 +18,7 @@ const config = require("./config.js");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-const io = require("socket.io").listen(server);
+// const io = require("socket.io").listen(server);
 // (http, {
 //   serveClient: true,
 //   transports: ['websocket', 'polling'],
@@ -61,7 +61,7 @@ const io = require("socket.io").listen(server);
 (async function () {
   try {
     console.log("Initializing all socket connections...");
-    socket.init(io);
+    // socket.init(io);
     console.log("All setup done successfully..");
   } catch (e) {
     console.error(e);
