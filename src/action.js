@@ -1,12 +1,13 @@
 // import { io } from '/socket.io-client';
 
-const socketURL = 'https://data-analytics.jubi.ai/video-socket';
+// const socketURL = 'https://data-analytics.jubi.ai/video-socket';
 // const socketURL = 'http://127.0.0.1:9741';
-// const socketURL = 'http://139.59.32.241:9740';
+const socketURL = 'http://139.59.32.241:9740';
 const socketPath = '/socket';
 const uid = uuidv4();
 console.log(uid);
 let socket;
+let peer;
 
 socket = io(socketURL, {
   path: socketPath,
@@ -17,7 +18,7 @@ onCall(socket)
 
 document.getElementById('start-call').addEventListener('click', ev => {
   ev.preventDefault()
-  var peer = new SimplePeer({ initiator: true, stream: stream })
+  peer = new SimplePeer({ initiator: true, stream: stream })
   socket.emit('call', { uid: uid })
 })
 
@@ -41,7 +42,7 @@ function onAccept() {
 }
 
 function gotMedia(stream) {
-  var peer = new SimplePeer()
+  peer = new SimplePeer()
 
   peer.on('signal', data => {
     peer.signal(data)
