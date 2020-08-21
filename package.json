@@ -19,9 +19,7 @@
     "path": "^0.12.7",
     "queue-microtask": "^1.1.0",
     "randombytes": "^2.0.3",
-    "readable-stream": "^3.4.0",
-    "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "readable-stream": "^3.4.0"
   },
   "devDependencies": {
     "airtap": "^3.0.0",
