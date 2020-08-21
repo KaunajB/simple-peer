@@ -24,17 +24,22 @@ socket.on('p2p', options => {
   if (uid == options.initiator) {
     peer = new SimplePeer({ initiator: true });
     peer.signal(data);
-    peer.on('signal', data => {
-      console.log('signal data', data, uid);
-      peer.signal(data);
-    });
+    // peer.on('signal', data => {
+    //   console.log('signal data', data, uid);
+    //   peer.signal(data);
+    // });
   } else {
     peer = new SimplePeer();
-    peer.on('signal', data => {
-      console.log('signal data', data, uid);
-      peer.signal(data);
-    });
+    // peer.on('signal', data => {
+    //   console.log('signal data', data, uid);
+    //   peer.signal(data);
+    // });
   }
+});
+
+peer.on('signal', data => {
+  console.log('signal data', data, uid);
+  peer.signal(data);
 });
 
 document.getElementById('start-call').addEventListener('click', ev => {
