@@ -19,7 +19,7 @@ socket.on('call' + uid, (data) => {
   console.log('call incoming', data)
 })
 
-socket.on('p2p', options => {
+socket.once('p2p', options => {
   console.log('establishing p2p connection', options);
   if (uid == options.initiator) {
     peer = new SimplePeer({ initiator: true });
@@ -37,9 +37,28 @@ socket.on('p2p', options => {
   peer.on('signal', data => {
     console.log('signal data', data, uid);
     peer.signal(data);
+    socket.emit('initiate', { data: data });
   });
   peer.on('error', err => console.log('peer error', err));
 });
+
+socket.on('offer' + uid, options => {
+  // peer.signal(options.data);
+  peer.on('signal', data => {
+    console.log('signal data', data, uid);
+    peer.signal(data);
+    // socket.emit('answer', { data: data });
+  });
+});
+
+// socket.on('success' + uid, options => {
+//   peer.signal(options.data);
+//   peer.on('signal', data => {
+//     console.log('signal data', data, uid);
+//     peer.signal(data);
+//     // socket.emit('answer', { data: data });
+//   });
+// });
 
 // peer.on('signal', data => {
 //   console.log('signal data', data, uid);
