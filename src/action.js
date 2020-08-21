@@ -17,7 +17,7 @@ onCall(socket)
 
 document.getElementById('start-call').addEventListener('click', ev => {
   ev.preventDefault()
-  peer = new SimplePeer({ initiator: true, stream: stream })
+  peer = new SimplePeer({ initiator: true })
   socket.emit('call', { uid: uid })
 })
 
