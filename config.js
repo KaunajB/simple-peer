@@ -3,5 +3,5 @@ module.exports = {
   httpPort: 9741,
   host: '0.0.0.0',
   path: '/',
-  socketPath: '/socket'
+  socketPath: '/'
 }
