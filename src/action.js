@@ -23,7 +23,6 @@ socket.on('p2p', options => {
   console.log('establishing p2p connection', options);
   if (uid == options.initiator) {
     peer = new SimplePeer({ initiator: true });
-    peer.signal(data);
     // peer.on('signal', data => {
     //   console.log('signal data', data, uid);
     //   peer.signal(data);
@@ -35,12 +34,17 @@ socket.on('p2p', options => {
     //   peer.signal(data);
     // });
   }
+  peer.on('signal', data => {
+    console.log('signal data', data, uid);
+    peer.signal(data);
+  });
+  peer.on('error', err => console.log('peer error', err));
 });
 
-peer.on('signal', data => {
-  console.log('signal data', data, uid);
-  peer.signal(data);
-});
+// peer.on('signal', data => {
+//   console.log('signal data', data, uid);
+//   peer.signal(data);
+// });
 
 document.getElementById('start-call').addEventListener('click', ev => {
   ev.preventDefault()
