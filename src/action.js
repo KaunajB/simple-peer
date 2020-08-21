@@ -1,6 +1,6 @@
-import io from 'https://data-analytics.jubi.ai/simple-peer/socket.io-client';
+import io from '/socket.io-client';
 
-const socketURL = 'https://data-analytics.jubi.ai/call';
+const socketURL = 'https://data-analytics.jubi.ai/call/socket';
 const socketPath = '/socket';
 const uid = uuidv4();
 console.log(uid);
