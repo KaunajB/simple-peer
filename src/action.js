@@ -1,10 +1,11 @@
 // import io from '/socket.io-client';
 
-const socketURL = 'https://data-analytics.jubi.ai/call';
-// const socketURL = 'http://139.59.32.241:9741';
-const socketPath = '/';
+const socketURL = 'https://data-analytics.jubi.ai/video-socket';
+// const socketURL = 'http://127.0.0.1:9741';
+const socketPath = '/socket';
 const uid = uuidv4();
 console.log(uid);
+let socket;
 
 (() => {
   socket = io(socketURL, {
@@ -12,7 +13,7 @@ console.log(uid);
     transports: ["websocket", "polling"]
   })
   socket.emit('init', { uid: uid })
-  onCall()
+  onCall(socket)
 })();
 
 document.getElementById('start-call').addEventListener('click', ev => {
@@ -27,7 +28,7 @@ document.getElementById('accept-call').addEventListener('click', ev => {
   onAccept()
 })
 
-function onCall() {
+function onCall(socket) {
   socket.once('call' + uid, (data) => {
     console.log('call incoming', data)
   })

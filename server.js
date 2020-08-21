@@ -16,14 +16,16 @@ const config = require("./config.js");
 
 
 const app = express();
-const http = require("http").Server(app);
-const io = require("socket.io")(http, {
-  serveClient: true,
-  transports: ['websocket', 'polling'],
-  path: config.socketPath,
-  // pingInterval: 30000,
-  // pingTimeout: 120000
-});
+const http = require("http");
+const server = http.createServer(app);
+const io = require("socket.io").listen(server);
+// (http, {
+//   serveClient: true,
+//   transports: ['websocket', 'polling'],
+//   path: config.socketPath,
+//   // pingInterval: 30000,
+//   // pingTimeout: 120000
+// });
 
 
 // All the initial setup around session management and apis
@@ -49,7 +51,7 @@ const io = require("socket.io")(http, {
 // Initialize server
 (function () {
   console.log("Server starting to listen to port " + config.httpPort);
-  http.listen(config.httpPort, () => {
+  server.listen(config.httpPort, () => {
     console.log("Server listening on port " + config.httpPort);
   });
 })();
