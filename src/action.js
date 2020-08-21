@@ -35,17 +35,18 @@ socket.once('p2p', options => {
     // });
   }
   peer.on('signal', data => {
-    console.log('signal data', data, uid);
+    console.log('signal data init', data, uid);
     peer.signal(data);
     socket.emit('initiate', { data: data });
   });
   peer.on('error', err => console.log('peer error', err));
 });
 
-socket.on('offer' + uid, options => {
+socket.once('offer' + uid, options => {
+  console.log('got offer');
   // peer.signal(options.data);
   peer.on('signal', data => {
-    console.log('signal data', data, uid);
+    console.log('signal data offer', data, uid);
     peer.signal(data);
     // socket.emit('answer', { data: data });
   });
