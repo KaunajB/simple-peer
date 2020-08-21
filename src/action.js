@@ -13,7 +13,11 @@ socket = io(socketURL, {
   transports: ["websocket", /*"polling"*/]
 })
 socket.emit('init', { uid: uid })
-onCall(socket)
+// onCall(socket)
+console.log('waiting for call', uid);
+socket.on('call' + uid, (data) => {
+  console.log('call incoming', data)
+})
 
 document.getElementById('start-call').addEventListener('click', ev => {
   ev.preventDefault()
