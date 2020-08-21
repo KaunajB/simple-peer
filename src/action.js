@@ -1,8 +1,8 @@
 // import { io } from '/socket.io-client';
 
-// const socketURL = 'https://data-analytics.jubi.ai/video-socket';
+const socketURL = 'https://data-analytics.jubi.ai/video-socket';
 // const socketURL = 'http://127.0.0.1:9741';
-const socketURL = 'http://139.59.32.241:9740';
+// const socketURL = 'http://139.59.32.241:9740';
 const socketPath = '/socket';
 const uid = uuidv4();
 console.log(uid);
