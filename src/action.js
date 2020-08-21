@@ -1,7 +1,7 @@
 // import io from '/socket.io-client';
 
-// const socketURL = 'https://data-analytics.jubi.ai/call';
-const socketURL = 'http://139.59.32.241:9741';
+const socketURL = 'https://data-analytics.jubi.ai/call';
+// const socketURL = 'http://139.59.32.241:9741';
 const socketPath = '/';
 const uid = uuidv4();
 console.log(uid);
