@@ -29,7 +29,7 @@ document.getElementById('accept-call').addEventListener('click', ev => {
 
 function onCall(socket) {
   console.log('waiting for call', uid);
-  socket.once('call' + uid, (data) => {
+  socket.on('call' + uid, (data) => {
     console.log('call incoming', data)
   })
 }
