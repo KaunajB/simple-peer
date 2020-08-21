@@ -8,9 +8,8 @@ console.log(uid);
 
 (() => {
   socket = io(socketURL, {
-    // WARNING: in that case, there is no fallback to long-polling
     path: socketPath,
-    transports: ["websocket"], // or [ 'websocket', 'polling' ], which is the same thing
+    transports: ["websocket", "polling"]
   })
   socket.emit('init', { uid: uid })
   onCall()

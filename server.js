@@ -18,6 +18,7 @@ const config = require("./config.js");
 const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
+  transports: ['websocket', 'polling'],
   path: config.socketPath,
   pingInterval: 30000,
   pingTimeout: 120000
