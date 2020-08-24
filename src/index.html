@@ -10,23 +10,59 @@
   <script defer src="./simplepeer.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
   <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script defer type="module" src="./action.js"></script>
+  <!-- <script defer type="module" src="./action.js"></script> -->
 </head>
 
-<body>
+<!-- <body>
   <video width="320" height="240"></video>
   <button id="start-call">Call</button>
   <button id="accept-call">Accept</button>
   <button id="start-video">Start</button>
   <button id="stop-video">Stop</button>
-  <!-- <script>
-    // navigator.mediaDevices.getUserMedia({
-    //   video: true,
-    //   audio: true
-    // }).then(gotMedia).catch(() => { })
+</body> -->
 
-    
-  </script> -->
+
+<body>
+  <style>
+    #outgoing {
+      width: 600px;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+  </style>
+  <form>
+    <textarea id="incoming"></textarea>
+    <button type="submit">submit</button>
+  </form>
+  <pre id="outgoing"></pre>
+  <script src="simplepeer.min.js"></script>
+  <script>
+    const p = new SimplePeer({
+      initiator: location.hash === '#1',
+      trickle: false
+    })
+
+    p.on('error', err => console.log('error', err))
+
+    p.on('signal', data => {
+      console.log('SIGNAL', JSON.stringify(data))
+      document.querySelector('#outgoing').textContent = JSON.stringify(data)
+    })
+
+    document.querySelector('form').addEventListener('submit', ev => {
+      ev.preventDefault()
+      p.signal(JSON.parse(document.querySelector('#incoming').value))
+    })
+
+    p.on('connect', () => {
+      console.log('CONNECT')
+      p.send('whatever' + Math.random())
+    })
+
+    p.on('data', data => {
+      console.log('data: ' + data)
+    })
+  </script>
 </body>
 
 </html>
